@@ -17,10 +17,10 @@
     /*
      *  touchEvent
      *    touches         当前屏幕上的手指列表
-     *    targetTouches 当前元素上的手指列表
-     *    changedTouches 触发当前的手指列表
-     *  clientX clientY 手指相当于可视区的一个坐标
-     *  pageX pageY 手指相对于页面的一个坐标
+     *    targetTouches   当前元素上的手指列表
+     *    changedTouches  触发当前的手指列表
+     *  clientX clientY   手指相当于可视区的一个坐标
+     *  pageX pageY       手指相对于页面的一个坐标
      */
 
     const list = document.querySelector('.list')
@@ -58,7 +58,7 @@
         isMove = false
       })
     }
-    // 
+    // 获取手指位置坐标
     function touchTab(el, fn) {
       const startPoint = {}
       el.addEventListener('touchstart', function (e) {
