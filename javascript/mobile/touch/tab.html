@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>tab事件封装</title>
+</head>
+
+<body>
+  <div class="page">
+    <ul class="list"></ul>
+  </div>
+
+  <script>
+    /*
+     *  touchEvent
+     *    touches         当前屏幕上的手指列表
+     *    targetTouches 当前元素上的手指列表
+     *    changedTouches 触发当前的手指列表
+     *  clientX clientY 手指相当于可视区的一个坐标
+     *  pageX pageY 手指相对于页面的一个坐标
+     */
+
+    const list = document.querySelector('.list')
+    let inline = ''
+    const page = document.querySelector('.page')
+    page.addEventListener('touchstart', function (e) {
+      e.preventDefault()
+    })
+    for (let index = 0; index < 50; index++) {
+      inline += `<li><a href="https://24365.wang">这是第${index}行</a></li>`
+    }
+
+    list.innerHTML = inline
+    let all = list.querySelectorAll('a')
+    for (let index = 0; index < all.length; index++) {
+      tabMove(all[index], function () {
+        console.info('123')
+        window.location.href = this.href
+      })
+    }
+
+
+    // 事件方法封装
+    // 滑动误触
+    function tabMove(el, fn) {
+      let isMove = false
+      el.addEventListener('touchmove', function (e) {
+        isMove = true
+      })
+
+      el.addEventListener('touchend', function (e) {
+        if (!isMove) {
+          fn && fn.call(el, e)
+        }
+        isMove = false
+      })
+    }
+    // 
+    function touchTab(el, fn) {
+      const startPoint = {}
+      el.addEventListener('touchstart', function (e) {
+        startPoint = {
+          x: e.changedTouches[0].pageX,
+          y: e.changedTouches[0].pageY
+        }
+      })
+      el.addEventListener('touchend', function (e) {
+        const nowtPoint = {
+          x: e.changedTouches[0].pageX,
+          y: e.changedTouches[0].pageY
+        }
+        if (Math.abs(nowtPoint.x - startPoint.x) < 5 && Math.abs(nowtPoint.y - startPoint.y) < 5) {
+          fn && fn.call(el, e)
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>
