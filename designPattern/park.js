@@ -1,0 +1,7 @@
+class Park {
+  constructor(floors){
+
+  }
+}
+
+
